@@ -2,18 +2,6 @@ services:
   decryptor:
     image: andreeesee/pdf-extractor:latest
     container_name: decryptor
-    command: >
-      gunicorn app:app
-      --bind 0.0.0.0:7860
-      --workers 2
-      --threads 2
-      --timeout 90
-      --log-level debug
-      --access-logfile -
-      --error-logfile -
-      --log-file -
-      --capture-output
-      --enable-stdio-inheritance
     restart: unless-stopped
     environment:
       - TZ=Asia/Manila
@@ -38,7 +26,7 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 15s
 
 networks:
   aio_net:
