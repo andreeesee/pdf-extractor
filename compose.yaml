@@ -1,6 +1,6 @@
 services:
   decryptor:
-    image: andreeesee/pdfextractor:latest
+    image: andreeesee/pdf-extractor:latest
     container_name: decryptor
     command: >
       gunicorn app:app
