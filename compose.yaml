@@ -1,0 +1,46 @@
+services:
+  decryptor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: decryptor
+    command: >
+      gunicorn app:app
+      --bind 0.0.0.0:7860
+      --workers 2
+      --threads 2
+      --timeout 90
+      --log-level debug
+      --access-logfile -
+      --error-logfile -
+      --log-file -
+      --capture-output
+      --enable-stdio-inheritance
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Manila
+      - PYTHONUNBUFFERED=1
+      - POPPLER_PATH=/usr/bin
+      - API_KEY=s1z23eax
+    networks:
+      - aio_net
+    expose:
+      - "7860"
+    ports:
+      - "7860:7860"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.decryptor.rule=Host(`${DECRYPTOR_HOSTNAME?}`)"
+      - "traefik.http.routers.decryptor.entryPoints=websecure"
+      - "traefik.http.routers.decryptor.tls.certresolver=letsencrypt"
+      - "traefik.http.services.decryptor.loadbalancer.server.port=7860"
+      - "com.centurylinklabs.watchtower.enable=false"
+    healthcheck:
+      test: curl -fsSL http://127.0.0.1:7860/health || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+networks:
+  aio_net:
+    external: true
