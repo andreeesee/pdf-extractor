@@ -21,7 +21,7 @@ services:
       - TZ=Asia/Manila
       - PYTHONUNBUFFERED=1
       - POPPLER_PATH=/usr/bin
-      - API_KEY=s1z23eax
+      - API_KEY=${API_KEY?}
     networks:
       - aio_net
     expose:

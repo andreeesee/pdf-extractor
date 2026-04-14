@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore", category=PdfReadWarning)
 pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
 # Config
-API_KEY = os.getenv("API_KEY", "s1z23eax")
+API_KEY = os.getenv("API_KEY")
 POPPLER_PATH = os.getenv("POPPLER_PATH", "/usr/bin")
 
 app = Flask(__name__)
@@ -85,7 +85,7 @@ def extract_fields(text: str) -> dict:
                 return d
         return None
 
-    # Dates — existing patterns
+    # Dates ï¿½ existing patterns
     statement_date = find_date([
         r"STATEMENT DATE\s*[:\-]?\s*([A-Z]{3,9} \d{1,2},? \d{4})",
         r"Statement Date\s*[:\-]?\s*([A-Z][a-z]{2,8} \d{1,2},? \d{4})",
@@ -98,8 +98,6 @@ def extract_fields(text: str) -> dict:
         r"Payment Due Date\s*[:\-]?\s*([0-9]{1,2} [A-Z][a-z]{2} \d{4})",
         r"Payment Due Date (\d{1,2} [A-Z]{3} \d{4})",
         r"PAYMENT\s*DUEDATE\s*([A-Z]+\s+\d{1,2},?\d{4})",
-    	r"JOHN ANDRE B SEE\s+([A-Z]{3,9}\s+\d{1,2},?\s+\d{4})",
-
     ])
 
     # Amounts
