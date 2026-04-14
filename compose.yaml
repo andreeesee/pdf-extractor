@@ -1,8 +1,6 @@
 services:
   decryptor:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: andreeesee/pdfextractor:latest
     container_name: decryptor
     command: >
       gunicorn app:app
@@ -36,11 +34,12 @@ services:
       - "traefik.http.services.decryptor.loadbalancer.server.port=7860"
       - "com.centurylinklabs.watchtower.enable=false"
     healthcheck:
-      test: curl -fsSL http://127.0.0.1:7860/health || exit 1
+      test: ["CMD-SHELL", "curl -fsSL http://127.0.0.1:7860/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 10s
+
 networks:
   aio_net:
     external: true
