@@ -20,4 +20,4 @@ COPY app.py .
 # Expose port
 EXPOSE 7860
 
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:7860", "--workers", "2", "--worker-class", "sync", "--timeout", "90", "--log-level", "debug", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:7860", "--workers", "2", "--worker-class", "sync", "--timeout", "90", "--log-level", "info", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
